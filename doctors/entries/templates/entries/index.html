@@ -95,8 +95,9 @@
 						{% for entries in entries_list %}
 
 
-							$a = $.getEntryDateStr({{entries}})
-							$b = $.getSelectedDateStr($("#entry_date").val())
+							if ($.getEntryDateStr('{{entries}}') == $.getSelectedDateStr($("#entry_date").val())) {
+								alert('ура!');
+							}
 
 
 							
