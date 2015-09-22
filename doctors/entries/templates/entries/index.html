@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+   <head>
+    	<meta charset="utf-8" />
+    	<title>
+    		Регистрация
+    	</title>    	
+    	<style>
+		   select {
+		    width: 300px; 
+		   }
+ 		</style> 
+ 		<style>
+		   input {
+		    width: 300px; 
+		   }
+ 		</style> 
+ 		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>	      	
+   </head>
+   <body>   		
+		<center><H1>Запись к врачу</H1></center>		
+		<form action="http://example.com/app/profile.php" method="post">
+		 <p>		        
+            <label for="client_name">
+               ФИО: 
+            </label>
+            <input type="text" id="client_name" required/><Br><Br>      
+            <label for="doctor_name">
+               Врач: 
+            </label>
+            <select id="doctor_name" required>
+            	<option value=-1></option>
+            	{% if doctors_list %}				    
+				    {% for doctors in doctors_list %}
+				        <option value={doctors.id}>{{doctors.doctor_name}}</option>
+				    {% endfor %}				    
+				{% else %}
+				    <option value=-1>Нет врачей.</option>
+				{% endif %}
+			</select required><Br><Br>	
+			<label for="entry_date">
+               Дата приёма: 
+            </label>					
+			<input type="date" id="entry_date" required><Br><Br>
+			<label for="entry_time">
+               Время приёма: 
+            </label>
+			<select id="entry_time" required>
+				<option value=-1></option>
+            	{% if work_time_list %}				    
+				    {% for worktime in work_time_list %}
+				        <option value={{ worktime.id }}>{{ worktime.time }}</option>
+				    {% endfor %}				    
+				{% else %}
+				    <option value=-1>Нет свободного времени.</option>
+				{% endif %}
+			</select>			
+		 </p>
+		  <p><input type="submit" value="Регистрация"></p>
+		</form>	
+		<script>						
+   			$("#doctor_name").on('change', function() {
+				$('#entry_time').val(null);  
+			}); 
+   			$("#entry_date").on('change', function() {					
+				$('#entry_time').val(null); 
+				$.today = function(){
+				    return new Date();
+				};
+				$.selected_date = function(){
+					return new Date($("#entry_date").val());
+				};				
+				$.getEntryDateStr = function(str) {
+					$arr = str.split(', ');	
+					return $arr[1];					
+				};
+				$.getSelectedDateStr = function(str) {
+					$arr = str.split('-');	
+					return $arr[2] + '.' + $arr[1] + '.' + $arr[0];				
+				};
+
+				Date.prototype.format = function (mask, utc) {
+				    return dateFormat(this, mask, utc);
+				};
+							
+
+				if (($.today() > $.selected_date())  || ($.selected_date() == null)) {
+					$("#entry_time").empty();
+					$("#entry_time").append( $('<option value=-1>Нет свободного времени.</option>'));
+				} else if ($.today() < $.selected_date()) {
+					
+					
+
+					{% if entries_list %}
+						{% for entries in entries_list %}
+
+
+							$a = $.getEntryDateStr({{entries}})
+							$b = $.getSelectedDateStr($("#entry_date").val())
+
+
+							
+
+
+
+
+
+											
+
+							
+
+
+					    {% endfor %}
+				    {% endif %}
+				};
+
+				
+
+			});
+   		</script>	
+   </body>
+</html>
+
