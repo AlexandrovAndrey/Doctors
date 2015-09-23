@@ -5,58 +5,74 @@
     	<title>
     		Регистрация
     	</title>    	
-    	<style>
-		   select {
-		    width: 300px; 
-		   }
- 		</style> 
- 		<style>
-		   input {
-		    width: 300px; 
-		   }
- 		</style> 
+    	<style>		   
+			.field {clear:both; text-align:right; line-height:25px;}
+			label {float:left; padding-right:100px;}
+			.main {float:left}
+			select {
+			width: 350px; 
+			}
+			input {
+			width: 345px; 
+			}
+			#submit_button {
+			    width: 10em;  
+			    height: 2em;
+			    float:right
+			}
+ 		</style> 		
  		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>	      	
    </head>
    <body>   		
 		<center><H1>Запись к врачу</H1></center>		
 		<form action="{% url 'save'%}" method="post">{% csrf_token %}
-		 <p>		        
-            <label for="client_name">
-               ФИО: 
-            </label>
-            <input type="text" id="client_name" name="client_name" required/><Br><Br>      
-            <label for="doctor_name">
-               Врач: 
-            </label>
-            <select id="doctor_name" name="doctor_name" required>
-            	<option value=-1></option>
-            	{% if doctors_list %}				    
-				    {% for doctors in doctors_list %}
-				        <option value={{doctors.id}}>{{doctors.doctor_name}}</option>
-				    {% endfor %}				    
-				{% else %}
-				    <option value=-1>Нет врачей.</option>
-				{% endif %}
-			</select required><Br><Br>	
-			<label for="entry_date">
-               Дата приёма: 
-            </label>					
-			<input type="date" id="entry_date" name="entry_date" required><Br><Br>
-			<label for="entry_time">
-               Время приёма: 
-            </label>
-			<select id="entry_time" name="entry_time" required>
-				<option value=-1></option>
-            	{% if work_time_list %}				    
-				    {% for worktime in work_time_list %}
-				        <option value={{ worktime.id }}>{{ worktime.time}}</option>
-				    {% endfor %}				    
-				{% else %}
-				    <option value=-1>Нет свободного времени.</option>
-				{% endif %}
-			</select>			
-		 </p>
-		  <p><input type="submit" value="Регистрация"></p>
+		<p>		        
+            <div class="main">
+	            <div class="field">
+		            <label for="client_name">
+		               ФИО: 
+		            </label>
+		            <input type="text" id="client_name" name="client_name" required/><Br><Br> 
+		        </div>
+		        <div class="field">     
+		            <label for="doctor_name">
+		               Врач: 
+		            </label>
+		            <select id="doctor_name" name="doctor_name" required>
+		            	<option value=-1></option>
+		            	{% if doctors_list %}				    
+						    {% for doctors in doctors_list %}
+						        <option value={{doctors.id}}>{{doctors.doctor_name}}</option>
+						    {% endfor %}				    
+						{% else %}
+						    <option value=-1>Нет врачей.</option>
+						{% endif %}
+					</select required><Br><Br>
+				</div>
+				<div class="field"> 	
+					<label for="entry_date">
+		               Дата приёма: 
+		            </label>					
+					<input type="date" id="entry_date" name="entry_date" required><Br><Br>
+				</div>
+				<div class="field">
+					<label for="entry_time">
+		               Время приёма: 
+		            </label>
+					<select id="entry_time" name="entry_time" required>
+						<option value=-1></option>
+		            	{% if work_time_list %}				    
+						    {% for worktime in work_time_list %}
+						        <option value={{ worktime.id }}>{{ worktime.time}}</option>
+						    {% endfor %}				    
+						{% else %}
+						    <option value=-1>Нет свободного времени.</option>
+						{% endif %}
+					</select>
+				</div>
+				<p><input type="submit" value="Регистрация" id="submit_button"></p>
+			</div>
+		</p>		
 		</form>	
 		<script>
 			window.changeWorkTime = function() {	
