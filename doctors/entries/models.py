@@ -1,8 +1,4 @@
-
 from django.db import models
-
-
-#from __future__ import unicode_literals
 
 # Create your models here.
 
@@ -24,7 +20,7 @@ class Entries(models.Model):
     doctor_name = models.ForeignKey('Doctors')
     client_name = models.CharField(max_length=200)
     def __str__(self): 
-        return str(self.entry_time) + ', ' + str(self.entry_date.strftime('%d.%m.%Y')) + ', ' + str(self.doctor_name) + ', ' + str(self.client_name)
-        
+        return str(self.entry_time) + ', ' + str(self.entry_date.strftime('%d.%m.%Y')) + ', врач: ' + str(self.doctor_name) + ', пациент: ' + str(self.client_name)
+       
 
 

@@ -1,11 +1,9 @@
 from django.shortcuts import render
 
-# Create your views here.
-
+from django.utils import timezone
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.utils import timezone
-
 
 from .models import Doctors, WorkTime, Entries
 
@@ -21,3 +19,24 @@ def index(request):
         'entries_list' : entries_list,                         
     })
     return HttpResponse(template.render(context))
+
+def save(request):
+    if request.method == 'POST':         
+        entry = Entries(
+            create_date = timezone.now(), 
+            entry_time = WorkTime.objects.get(id=request.POST['entry_time']), 
+            entry_date = request.POST['entry_date'],
+            doctor_name = Doctors.objects.get(id=request.POST['doctor_name']),
+            client_name = request.POST['client_name'],
+        )
+        entry.save()
+        return HttpResponse('запись сохранена...')
+    else:
+        return HttpResponse('запись не сохранена...')    
+
+    
+
+    
+        
+            
+      
